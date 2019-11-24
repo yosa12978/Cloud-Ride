@@ -1,0 +1,18 @@
+{% extends "blocks/wrapper.html" %} 
+
+{%block content%} 
+{% include "includes/header.html"%} 
+
+<h1>Upload</h1>
+
+<form enctype="multipart/form-data" method="post">
+    {%csrf_token%}
+    <input type="file" name="file" style="width: 400px;"><br>
+    <select name="access">
+        <option>General</option>
+        <option>Private</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+{%endblock%}

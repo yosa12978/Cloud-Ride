@@ -1,0 +1,26 @@
+{% extends "blocks/wrapper.html" %} 
+
+{%block content%} 
+{% include "includes/header.html"%} 
+
+<form method="post">
+    {%csrf_token%}
+    <h1>Search users</h1>
+    <hr>
+    <input type="text" name="search" class="form-control" style="width: 400px;" placeholder="search"><br>
+    <button type="submit" class="btn btn-success">Search</button><br>
+</form>
+
+{%if result%}
+<hr>
+<h2>Serch results</h2><br><br>
+<table>
+{%for i in result%}
+<tr>
+    <td><a href="/self/{{i.username}}">{{i.username}}</a></td>
+</tr>
+{%endfor%}
+</table>
+{%endif%}
+
+{%endblock%}

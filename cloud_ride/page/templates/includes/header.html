@@ -1,0 +1,21 @@
+<style>
+img{
+    height: 25%;
+    width: 20%;
+}
+</style>
+<div>
+    <a href="/search" role="button">Search</a>
+</div>
+<hr>
+<div>
+    {% if user.is_authenticated%}
+        <a href="/self/{{user}}" role="button">{{user}}</a><br>
+        <a href="/self/{{user}}/upload">Upload Files</a><br>
+        <a href="/logout" role="button">Logout</a>
+    {%else%}
+        <a href="/login" role="button">Login</a><br>
+        <a href="/signup" role="button">Signup</a>
+    {%endif%}
+</div>
+<hr>

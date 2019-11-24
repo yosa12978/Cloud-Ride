@@ -1,0 +1,20 @@
+{% extends "blocks/wrapper.html" %} 
+
+{%block content%} 
+{% include "includes/header.html"%} 
+
+<h1>This is {{who}} cloud.</h1>
+<hr>
+<h2>items</h2>
+
+<table>
+{%for i in item%}
+
+<tr>
+    <td><a href="/{{i.File}}" download>{{i.File}}</a></td>
+    <td style = "width: 20%;"><a href="/self/{{who}}/delete/{{i.id}}">Delete</a></td>
+</tr>
+
+{%endfor%}
+</table>
+{%endblock%}
