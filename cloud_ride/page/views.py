@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db import IntegrityError
 from .models import Item
+import os
 
 def index(request):
     if get_user(request):
@@ -49,7 +50,9 @@ def upload(request, name):
 @login_required(login_url = "/login")
 def delete(request, name, id):
     if name == get_user(request).username:
-        Item.objects.get(author__username = name, id = id).delete()
+        item = Item.objects.get(author__username = name, id = id)
+        os.remove(str(item.File.path))
+        item.delete()
         return redirect("/self/"+str(name))
     else:
         return redirect("/self/"+str(name))
