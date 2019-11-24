@@ -7,12 +7,12 @@
 
 <form enctype="multipart/form-data" method="post">
     {%csrf_token%}
-    <input type="file" name="file" style="width: 400px;"><br>
-    <select name="access">
+    <input type="file" name="file" style="width: 400px;" class="form-control"><br>
+    <select name="access" class="form-control" style="width: 400px;">
         <option>General</option>
         <option>Private</option>
-    </select>
-    <button type="submit">Submit</button>
+    </select><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 {%endblock%}

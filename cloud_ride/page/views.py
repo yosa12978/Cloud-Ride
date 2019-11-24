@@ -8,10 +8,10 @@ from .models import Item
 import os
 
 def index(request):
-    if get_user(request):
-        return redirect("/self/"+str(get_user(request)))
-    else:
+    if get_user(request).username == "AnonymousUser":
         return redirect("/login")
+    else:
+        return redirect("/self/"+str(get_user(request)))
 
 def search(request):
     if request.method == "POST":
@@ -20,8 +20,9 @@ def search(request):
     else:
         return render(request, "search.html", {})
 
-@login_required(login_url="/login")
 def self(request, name):
+    if name == "AnonymousUser":
+        return redirect("/login")
     if get_user(request).username != name:
         items = Item.objects.filter(author__username = name, access = True).order_by("-id")
         return render(request, "self.html", {"item": items, "who": name})
@@ -51,7 +52,7 @@ def upload(request, name):
 def delete(request, name, id):
     if name == get_user(request).username:
         item = Item.objects.get(author__username = name, id = id)
-        os.remove(str(item.File.path))
+        os.remove(item.File.path)
         item.delete()
         return redirect("/self/"+str(name))
     else:
@@ -70,7 +71,9 @@ def loginn(request):
 
 def signup(request):
     if request.method == "POST":
-        if request.POST["username"] == "" or request.POST['password'] == '':
+        if request.POST["username"] == "" or request.POST['password'] == '' or request.POST["username"] == 'AnonymousUser':
+            return redirect("/signup")
+        if request.POST["password"] != request.POST['password_confrim']:
             return redirect("/signup")
         else:
             try:
